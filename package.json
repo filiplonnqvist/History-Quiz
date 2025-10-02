@@ -1,0 +1,33 @@
+{
+  "name": "history-quiz",
+  "version": "1.0.0",
+  "description": "A history quiz web application that tests your knowledge of historical facts.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "keywords": [
+    "history",
+    "quiz",
+    "education",
+    "web-components",
+    "vanilla-js"
+  ],
+  "author": "Filip Lönnqvist <fl223km@student.lnu.se>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filiplonnqvist/History-Quiz.git"
+  },
+  "dependencies": {
+    "random-historical-facts": "github:filiplonnqvist/Random-Historical-Facts"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.10",
+    "vite": "^7.1.8"
+  }
+}
