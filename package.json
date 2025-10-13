@@ -24,7 +24,7 @@
     "url": "https://github.com/filiplonnqvist/History-Quiz.git"
   },
   "dependencies": {
-    "random-historical-facts": "github:filiplonnqvist/Random-Historical-Facts"
+    "random-historical-facts": "git+https://github.com/filiplonnqvist/Random-Historical-Facts.git"
   },
   "devDependencies": {
     "@lnu/eslint-config": "^1.1.10",
