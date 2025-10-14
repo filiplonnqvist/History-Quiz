@@ -67,9 +67,10 @@ button:hover {
 }
 </style>
 <div id="quiz-score-container">
-  <h2>Quiz score list</h2>
-  <ul id="quiz-score"></ul>
-  <button id="restart-quiz">Restart quiz</button>
+  <h2>Quiz result</h2>
+  <p id="quiz-score" aria-live="polite"></p>
+  <button id="restart-quiz" type="button">Restart quiz</button>
+
 </div>
 `
 export { quizScore }
