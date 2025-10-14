@@ -8,10 +8,9 @@ customElements.define('quiz-app',
   class extends HTMLElement {
     #welcomeText
     #quizQuestion
-    #questiontext
-    #questionImage
-    #nextQuestion
-    #historicalFacts
+    #questionGenerator
+    #currentQuestion
+
 
     /**
      * Creates a new instance of the QuizApp component.
@@ -24,11 +23,7 @@ customElements.define('quiz-app',
 
       this.#welcomeText = this.shadowRoot.querySelector('welcome-text')
       this.#quizQuestion = this.shadowRoot.querySelector('quiz-question')
-      this.#questiontext = this.shadowRoot.querySelector('question-text')
-      this.#questionImage = this.shadowRoot.querySelector('question-image')
-
-      this.#historicalFacts = new RandomHistoricalFacts()
-    }
+      }
 
     /**
      * Invoked when the element is added to the DOM.
@@ -42,11 +37,12 @@ customElements.define('quiz-app',
     }
 
     fetchQuestion () {
-      const facts = this.#historicalFacts
+      const facts = this.#questionGenerator
       const randomFact = facts.getRandomFact()
-
     }
 
+    fetchQuestionImage () {
 
   }
+}
 )
