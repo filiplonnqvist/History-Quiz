@@ -68,7 +68,7 @@ button:hover {
 </style>
 <div id="quiz-score-container">
   <h2>Quiz score list</h2>
-  <ul id="quiz-score-list"></ul>
+  <ul id="quiz-score"></ul>
   <button id="restart-quiz">Restart quiz</button>
 </div>
 `

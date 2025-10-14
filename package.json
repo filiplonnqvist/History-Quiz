@@ -27,7 +27,6 @@
     "random-historical-facts": "git+https://github.com/filiplonnqvist/Random-Historical-Facts.git"
   },
   "devDependencies": {
-    "@lnu/eslint-config": "^1.1.10",
     "vite": "^7.1.8"
   }
 }
