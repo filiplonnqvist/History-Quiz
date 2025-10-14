@@ -30,10 +30,6 @@ customElements.define('quiz-app',
      * Attaches event listeners for user interactions and quiz events.
      */
     connectedCallback () {
-      this.#quizQuestion.addEventListener('answer-submitted', (event) => {
-        const { answer } = event.detail
-        this.submitAnswer(answer, this.#nextQuestion)
-      })
     }
 
     fetchQuestion () {
