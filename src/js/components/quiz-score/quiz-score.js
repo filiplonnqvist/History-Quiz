@@ -2,12 +2,10 @@ import { quizScore } from './quiz-score-template.js'
 
 /**
  * Custom element for managing and displaying quiz score.
- * Handles storing, rendering, and updating the quiz score.
  */
 customElements.define('quiz-score',
   /**
    * Class representing the QuizScore custom element.
-   * Extends the HTMLElement class.
    */
   class extends HTMLElement {
     #quizScore
@@ -24,7 +22,6 @@ customElements.define('quiz-score',
 
     /**
      * Called when the element is added to the DOM.
-     * Sets up event listeners for the component.
      */
     connectedCallback () {
       this.#setupEventListeners()
