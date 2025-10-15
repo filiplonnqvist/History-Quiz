@@ -58,5 +58,23 @@ Jag har konsekvent försökt följa principen "Explain Yourself in Code" genom a
 setFact(fact) {
     this.#validateFact(fact)
     ...
+}
 ```
-LAW OF DEMETER??
+## Kapitel 6 - Objects and Data Structures
+
+Mina Web Components följer "Data/Object Anti-Symmetry" genom att dölja data (privata fält som #options, #disabled) och exponera beteende genom publika metoder. Detta exemplifieras i `quiz-options` där tillståndet är privat men manipuleras via `setOptions()` och `setButtonsDisabled()`. "Law of Demeter" följs genom att komponenter inte exponerar sin interna struktur - andra komponenter kan inte direkt komma åt DOM-element eller interna tillstånd. Jag använder "Data Transfer Objects" i form av CustomEvents med detail-objekt för att kommunicera mellan komponenter på ett strukturerat sätt.
+
+```javascript
+setButtonsDisabled(disabled) {
+    this.#setDisabledState(disabled)
+    this.#updateButtonStates()
+}
+```
+
+```javascript
+setOptions(periods) {
+    this.#validatePeriods(periods)
+    this.#options.innerHTML = ''
+    this.#createPeriodButtons(periods)
+}
+```

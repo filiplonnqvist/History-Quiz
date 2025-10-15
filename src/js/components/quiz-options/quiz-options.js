@@ -72,6 +72,8 @@ customElements.define('quiz-options',
         #updateButtonStates() {
             const buttons = this.#options.querySelectorAll('button')
             if (buttons.length === 0) return
-            buttons.forEach(button => { button.disabled = this.#disabled }) 
+            buttons.forEach(button => {
+                button.disabled = this.#disabled
+            })
         }
     })
