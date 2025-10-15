@@ -5,7 +5,7 @@ customElements.define('quiz-question',
     #text
     #image
 
-    constructor () {
+    constructor() {
       super()
       this.attachShadow({ mode: 'open' })
       this.shadowRoot.appendChild(quizQuestion.content.cloneNode(true))
@@ -40,7 +40,7 @@ customElements.define('quiz-question',
       }
     }
 
-    #validateFact (fact) {
+    #validateFact(fact) {
       if (!fact || typeof fact !== 'object') {
         throw new Error('Question could not be loaded')
       }

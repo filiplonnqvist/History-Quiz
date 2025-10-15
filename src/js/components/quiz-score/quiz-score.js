@@ -11,7 +11,7 @@ customElements.define('quiz-score',
     #quizScore
     #restartButton
 
-    constructor () {
+    constructor() {
       super()
       this.attachShadow({ mode: 'open' })
       this.shadowRoot.appendChild(quizScore.content.cloneNode(true))
@@ -23,11 +23,11 @@ customElements.define('quiz-score',
     /**
      * Called when the element is added to the DOM.
      */
-    connectedCallback () {
+    connectedCallback() {
       this.#setupEventListeners()
     }
 
-    #setupEventListeners () {
+    #setupEventListeners() {
       this.#restartButton.addEventListener('click', () => {
         this.dispatchEvent(new CustomEvent('restart', { bubbles: true, composed: true }))
       })
@@ -39,18 +39,18 @@ customElements.define('quiz-score',
      * @param {{score:number,total:number}} param0
      * @throws {Error} If the score or total is not a valid number.
      */
-    setResult ({ score, total }) {
+    setResult({ score, total }) {
       this.#validateScore(score, total)
       this.#renderResult(score, total)
     }
 
-    #validateScore (score, total) {
+    #validateScore(score, total) {
       if (!Number.isFinite(score) || !Number.isFinite(total)) {
         throw new Error('Invalid numbers')
       }
     }
 
-    #renderResult (score, total) {
+    #renderResult(score, total) {
       this.shadowRoot.querySelector('#quiz-score').textContent = `Your score: ${score} / ${total}`
     }
   }
