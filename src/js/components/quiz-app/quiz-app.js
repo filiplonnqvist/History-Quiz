@@ -6,10 +6,10 @@ import { quizApp } from './quiz-app-template.js'
 
 customElements.define('quiz-app', class extends HTMLElement {
   #questionEl
-  #optionsEl 
+  #optionsEl
   #scoreEl
-  #viewQuestion 
-  #viewScore 
+  #viewQuestion
+  #viewScore
   #errorEl
 
   #round = 0;
@@ -20,7 +20,6 @@ customElements.define('quiz-app', class extends HTMLElement {
   #facts = new RandomHistoricalFacts()
 
   static ROUNDS = 10;
-  static PERIOD_DISCOVERY_MAX_TRIES = 100;
 
   constructor() {
     super()
@@ -36,16 +35,13 @@ customElements.define('quiz-app', class extends HTMLElement {
   }
 
   async connectedCallback() {
-    await Promise.all([
-      customElements.whenDefined('quiz-question'),
-      customElements.whenDefined('quiz-options'),
-      customElements.whenDefined('quiz-score'),
-    ])
-
-    this.#optionsEl.addEventListener('answer', (e) => this.#onAnswer(e.detail.period))
-    this.#scoreEl.addEventListener('restart', () => this.#restart())
-
     this.#start()
+    this.#setupEventListeners()
+  }
+
+  #setupEventListeners() {
+    this.#optionsEl.addEventListener('answer', (e) => this.#handleAnswer(e.detail.period))
+    this.#scoreEl.addEventListener('restart', () => this.#restart())
   }
 
   async #start() {
@@ -55,27 +51,38 @@ customElements.define('quiz-app', class extends HTMLElement {
     this.#score = 0
 
     try {
-      this.#periods = await this.#discoverPeriods()
+      this.#periods = await this.#findAllPeriods()
       this.#optionsEl.setOptions(this.#periods)
 
       await this.#next()
       this.#showQuestion()
     } catch (err) {
-      this.#showError('Kunde inte starta quizet. Försök igen.')
+      this.#showError('Could not start quiz. Please try again.')
       console.error(err)
     }
   }
 
-  async #discoverPeriods() {
-    const set = new Set()
-    let tries = 0
-    while (set.size < 3 && tries < this.constructor.PERIOD_DISCOVERY_MAX_TRIES) {
-      tries++
-      const item = await this.#facts.getRandomFact()   // 🛠 instansen
-      if (item && item.period) set.add(item.period)
+  #hideAll() {
+    this.#viewQuestion.hidden = true
+    this.#viewScore.hidden = true
+    this.#errorEl.hidden = true
+  }
+
+  async #findAllPeriods() {
+    const allFacts = await this.#facts.getAllFacts()
+    const periods = new Set()
+
+    for (const fact of allFacts) {
+      if (fact.period) {
+        periods.add(fact.period)
+      }
     }
-    if (set.size === 0) throw new Error('No periods')
-    return Array.from(set).sort()
+
+    if (periods.size === 0) {
+      throw new Error('No periods available.')
+    }
+
+    return Array.from(periods)
   }
 
   async #next() {
@@ -83,7 +90,7 @@ customElements.define('quiz-app', class extends HTMLElement {
 
     let item
     do {
-      item = await this.#facts.getRandomFact()         // 🛠 instansen
+      item = await this.#facts.getRandomFact()
     } while (!item || !item.period)
 
     const mapped = this.#mapFact(item)
@@ -93,17 +100,32 @@ customElements.define('quiz-app', class extends HTMLElement {
     this.#optionsEl.setButtonsDisabled(false)
   }
 
-  #onAnswer(chosenPeriod) {
+  #showQuestion() {
+    this.#hideAll()
+    this.#viewQuestion.hidden = false
+  }
+
+  #handleAnswer(chosenPeriod) {
     if (!this.#current) return
-    if (chosenPeriod === this.#current.period) this.#score++
+    if (this.#isCorrectAnswer(chosenPeriod)) {
+      this.#score++
+    }
 
     this.#round++
-    if (this.#round >= this.constructor.ROUNDS) {
+
+    if (this.#isQuizComplete()) {
       this.#finish()
     } else {
-      // auto-next
       this.#next()
     }
+  }
+
+  #isCorrectAnswer(chosenPeriod) {
+    return chosenPeriod === this.#current.period
+  }
+
+  #isQuizComplete() {
+    return this.#round >= this.constructor.ROUNDS
   }
 
   #finish() {
@@ -124,21 +146,10 @@ customElements.define('quiz-app', class extends HTMLElement {
     }
   }
 
-  #showQuestion() {
-    this.#hideAll()
-    this.#viewQuestion.hidden = false
-  }
-
   #showError(msg) {
     this.#hideAll()
     this.#errorEl.textContent = msg ?? 'Error'
     this.#errorEl.hidden = false
-  }
-
-  #hideAll() {
-    this.#viewQuestion.hidden = true
-    this.#viewScore.hidden = true
-    this.#errorEl.hidden = true
   }
 }
 )

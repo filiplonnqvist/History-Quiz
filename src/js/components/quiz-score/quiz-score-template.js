@@ -11,7 +11,8 @@ quizScore.innerHTML = `
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  width: 300px;
+  heigh: 400px;
   margin: 0 auto;
 }
 
