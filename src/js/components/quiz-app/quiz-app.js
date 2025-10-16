@@ -15,11 +15,14 @@ customElements.define('quiz-app', class extends HTMLElement {
   #round = 0;
   #score = 0;
   #periods = [];
+  #availableFacts = []
   #current = null;
+
 
   #facts = new RandomHistoricalFacts()
 
   static ROUNDS = 10;
+
 
   constructor() {
     super()
@@ -34,26 +37,20 @@ customElements.define('quiz-app', class extends HTMLElement {
     this.#errorEl = this.shadowRoot.querySelector('#error')
   }
 
+  /** 
+   * Lifecycle method called when the element is added to the DOM.
+   * Initiates the quiz and sets up event listeners.
+   */
   async connectedCallback() {
     this.#start()
     this.#setupEventListeners()
   }
 
-  #setupEventListeners() {
-    this.#optionsEl.addEventListener('answer', (e) => this.#handleAnswer(e.detail.period))
-    this.#scoreEl.addEventListener('restart', () => this.#restart())
-  }
-
   async #start() {
-    this.#hideAll()
-    this.#errorEl.textContent = ''
-    this.#round = 0
-    this.#score = 0
+    this.#resetQuizState()
 
     try {
-      this.#periods = await this.#findAllPeriods()
-      this.#optionsEl.setOptions(this.#periods)
-
+      await this.#loadQuizData()
       await this.#next()
       this.#showQuestion()
     } catch (err) {
@@ -62,21 +59,34 @@ customElements.define('quiz-app', class extends HTMLElement {
     }
   }
 
+  #resetQuizState() {
+    this.#hideAll()
+    this.#errorEl.textContent = ''
+    this.#round = 0
+    this.#score = 0
+  }
+
   #hideAll() {
     this.#viewQuestion.hidden = true
     this.#viewScore.hidden = true
     this.#errorEl.hidden = true
   }
 
-  async #findAllPeriods() {
+  async #loadQuizData() {
     const allFacts = await this.#facts.getAllFacts()
-    const periods = new Set()
 
-    for (const fact of allFacts) {
-      if (fact.period) {
-        periods.add(fact.period)
-      }
-    }
+    this.#periods = this.#extractAllPeriods(allFacts)
+    this.#optionsEl.setOptions(this.#periods)
+
+    this.#availableFacts = this.#extractRandomFacts(allFacts)
+  }
+
+  #extractAllPeriods(allFacts) {
+    const periods = new Set(
+      allFacts
+        .filter(f => f.period)
+        .map(f => f.period)
+    )
 
     if (periods.size === 0) {
       throw new Error('No periods available.')
@@ -85,19 +95,44 @@ customElements.define('quiz-app', class extends HTMLElement {
     return Array.from(periods)
   }
 
-  async #next() {
+  #extractRandomFacts(allFacts) {
+    const factsWithPeriod = allFacts.filter(f => f.period)
+
+    // Shuffle with Fisher-Yates
+    for (let i = factsWithPeriod.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [factsWithPeriod[i], factsWithPeriod[j]] = [factsWithPeriod[j], factsWithPeriod[i]]
+    }
+
+    return factsWithPeriod.slice(0, this.constructor.ROUNDS)
+  }
+
+  #next() {
     this.#optionsEl.setButtonsDisabled(true)
 
-    let item
-    do {
-      item = await this.#facts.getRandomFact()
-    } while (!item || !item.period)
+    if (this.#availableFacts.length === 0) {
+      throw new Error('No more facts available')
+    }
 
+    const item = this.#availableFacts.pop()
     const mapped = this.#mapFact(item)
     this.#current = mapped
 
     this.#questionEl.setFact({ fact: mapped.text, imageUrl: mapped.imageUrl })
     this.#optionsEl.setButtonsDisabled(false)
+  }
+
+  #setupEventListeners() {
+    this.#optionsEl.addEventListener('answer', (e) => this.#handleAnswer(e.detail.period))
+    this.#scoreEl.addEventListener('restart', () => this.#restart())
+  }
+
+  #mapFact(item) {
+    return {
+      text: item?.fact ?? '',
+      imageUrl: item?.imageUrl ?? '',
+      period: item?.period ?? ''
+    }
   }
 
   #showQuestion() {
@@ -136,14 +171,6 @@ customElements.define('quiz-app', class extends HTMLElement {
 
   #restart() {
     this.#start()
-  }
-
-  #mapFact(item) {
-    return {
-      text: item?.fact ?? '',
-      imageUrl: item?.imageUrl ?? '',
-      period: item?.period ?? ''
-    }
   }
 
   #showError(msg) {
