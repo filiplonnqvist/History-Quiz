@@ -1,4 +1,3 @@
-// quiz-app-template.js
 const quizApp = document.createElement('template')
 quizApp.innerHTML = `
   <style>
@@ -10,6 +9,13 @@ quizApp.innerHTML = `
       max-width: 700px;
       margin: 0 auto;
       padding: 16px;
+    }
+
+    #view-start {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
     }
 
     #view-question {
@@ -37,10 +43,11 @@ quizApp.innerHTML = `
 
   <div id="error" class="view" hidden></div>
 
+  <section id="view-start" class="view">
+    <quiz-start></quiz-start>
+  </section>
+
   <section id="view-question" class="view" hidden>
-    <h2>Welcome to the History Quiz!</h2>
-    <p>Test your knowledge of historical events and figures. Please press the matching period button.</p>
-        <button type="submit">Start quiz</button>
     <quiz-question></quiz-question>
     <quiz-options></quiz-options>
   </section>

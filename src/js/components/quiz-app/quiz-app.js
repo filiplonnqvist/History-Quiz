@@ -1,4 +1,5 @@
-import QuizDataManager from '../../services/QuizDataManager.js'  // ✅ Import service
+import QuizDataManager from '../../services/QuizDataManager.js'
+import '../quiz-start/index.js'
 import '../quiz-question/index.js'
 import '../quiz-options/index.js'
 import '../quiz-score/index.js'
@@ -9,10 +10,11 @@ import { quizApp } from './quiz-app-template.js'
  */
 customElements.define('quiz-app',
   class extends HTMLElement {
-    #h2
+    #startEl
     #questionEl
     #optionsEl
     #scoreEl
+    #viewStart
     #viewQuestion
     #viewScore
     #errorEl
@@ -32,24 +34,30 @@ customElements.define('quiz-app',
       this.attachShadow({ mode: 'open' })
       this.shadowRoot.appendChild(quizApp.content.cloneNode(true))
 
-      this.#h2 = this.shadowRoot.querySelector('h2')
+      this.#startEl = this.shadowRoot.querySelector('quiz-start')
       this.#questionEl = this.shadowRoot.querySelector('quiz-question')
       this.#optionsEl = this.shadowRoot.querySelector('quiz-options')
       this.#scoreEl = this.shadowRoot.querySelector('quiz-score')
+      this.#viewStart = this.shadowRoot.querySelector('#view-start')
       this.#viewQuestion = this.shadowRoot.querySelector('#view-question')
       this.#viewScore = this.shadowRoot.querySelector('#view-score')
       this.#errorEl = this.shadowRoot.querySelector('#error')
     }
 
     async connectedCallback() {
-      this.#start()
+      this.#showStart()
       this.#setupEventListeners()
     }
 
     #setupEventListeners() {
-      this.#h2.nextElementSibling.addEventListener('click', () => this.#start())
+      this.#startEl.addEventListener('start', () => this.#start())
       this.#optionsEl.addEventListener('answer', (e) => this.#handleAnswer(e.detail.period))
       this.#scoreEl.addEventListener('restart', () => this.#restart())
+    }
+
+    #showStart() {
+      this.#hideAll()
+      this.#viewStart.hidden = false
     }
 
     async #start() {
@@ -81,6 +89,7 @@ customElements.define('quiz-app',
     }
 
     #hideAll() {
+      this.#viewStart.hidden = true
       this.#viewQuestion.hidden = true
       this.#viewScore.hidden = true
       this.#errorEl.hidden = true
@@ -134,7 +143,7 @@ customElements.define('quiz-app',
     }
 
     #restart() {
-      this.#start()
+      this.#showStart()
     }
 
     #showError(msg) {
