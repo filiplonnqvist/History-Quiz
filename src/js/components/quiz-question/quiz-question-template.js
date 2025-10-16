@@ -5,9 +5,8 @@ quizQuestion.innerHTML = `
     display: block;
   }
 
-  /* Kortet */
   .container {
-    max-width: 680px;      /* <- styr totalbredden */
+    max-width: 680px;
     margin: 0 auto;
   }
 
@@ -16,7 +15,6 @@ quizQuestion.innerHTML = `
     margin-bottom: 20px;
   }
 
-  /* Bilden */
   #question-image {
     width: 100%;
     height: auto;

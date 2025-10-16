@@ -12,14 +12,12 @@ quizApp.innerHTML = `
       padding: 16px;
     }
 
-    /* Frågevyn: lite luft mellan barnen */
     #view-question {
       display: grid;
       gap: 16px;
       padding-block: 24px;
     }
 
-    /* Score-vyn: mitt på sidan vertikalt + horisontellt */
     #view-score {
       min-height: 100dvh;
       display: grid;
@@ -27,7 +25,6 @@ quizApp.innerHTML = `
       padding: 24px;
     }
 
-    /* Snyggare felruta */
     #error {
       color: #8a1136;
       background: #ffe8ee;
@@ -41,6 +38,9 @@ quizApp.innerHTML = `
   <div id="error" class="view" hidden></div>
 
   <section id="view-question" class="view" hidden>
+    <h2>Welcome to the History Quiz!</h2>
+    <p>Test your knowledge of historical events and figures. Please press the matching period button.</p>
+        <button type="submit">Start quiz</button>
     <quiz-question></quiz-question>
     <quiz-options></quiz-options>
   </section>

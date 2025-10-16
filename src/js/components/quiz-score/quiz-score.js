@@ -4,9 +4,6 @@ import { quizScore } from './quiz-score-template.js'
  * Custom element for managing and displaying quiz score.
  */
 customElements.define('quiz-score',
-  /**
-   * Class representing the QuizScore custom element.
-   */
   class extends HTMLElement {
     #quizScore
     #restartButton
@@ -20,9 +17,6 @@ customElements.define('quiz-score',
       this.#restartButton = this.shadowRoot.querySelector('#restart-quiz')
     }
 
-    /**
-     * Called when the element is added to the DOM.
-     */
     connectedCallback() {
       this.#setupEventListeners()
     }

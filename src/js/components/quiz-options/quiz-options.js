@@ -1,5 +1,8 @@
 import { quizOptions } from './quiz-options-template.js'
 
+/**
+ * Custom element for displaying quiz options as buttons.
+ */
 customElements.define('quiz-options',
     class extends HTMLElement {
         #options

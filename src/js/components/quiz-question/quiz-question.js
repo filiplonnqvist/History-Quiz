@@ -1,5 +1,8 @@
 import { quizQuestion } from './quiz-question-template.js'
 
+/**
+ * Custom element for displaying a quiz question with text and an optional image.
+ */
 customElements.define('quiz-question',
   class extends HTMLElement {
     #text

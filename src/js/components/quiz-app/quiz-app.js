@@ -9,6 +9,7 @@ import { quizApp } from './quiz-app-template.js'
  */
 customElements.define('quiz-app',
   class extends HTMLElement {
+    #h2
     #questionEl
     #optionsEl
     #scoreEl
@@ -31,6 +32,7 @@ customElements.define('quiz-app',
       this.attachShadow({ mode: 'open' })
       this.shadowRoot.appendChild(quizApp.content.cloneNode(true))
 
+      this.#h2 = this.shadowRoot.querySelector('h2')
       this.#questionEl = this.shadowRoot.querySelector('quiz-question')
       this.#optionsEl = this.shadowRoot.querySelector('quiz-options')
       this.#scoreEl = this.shadowRoot.querySelector('quiz-score')
@@ -45,6 +47,7 @@ customElements.define('quiz-app',
     }
 
     #setupEventListeners() {
+      this.#h2.nextElementSibling.addEventListener('click', () => this.#start())
       this.#optionsEl.addEventListener('answer', (e) => this.#handleAnswer(e.detail.period))
       this.#scoreEl.addEventListener('restart', () => this.#restart())
     }
