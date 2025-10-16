@@ -33,10 +33,10 @@ customElements.define('quiz-question',
 
       if (fact.imageUrl) {
         this.#image.hidden = false
-        this.#image.src = fact.imageUrl // Set the image source if imageUrl is provided
+        this.#image.src = fact.imageUrl
       } else {
         this.#image.hidden = true
-        this.#image.removeAttribute('src') // Remove the src attribute if no imageUrl is provided
+        this.#image.removeAttribute('src')
       }
     }
 
