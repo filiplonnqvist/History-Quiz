@@ -1,6 +1,6 @@
 {
   "name": "history-quiz",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A history quiz web application that tests your knowledge of historical facts.",
   "type": "module",
   "scripts": {

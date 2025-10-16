@@ -78,3 +78,7 @@ setOptions(periods) {
     this.#createPeriodButtons(periods)
 }
 ```
+
+
+
+jag fick använda mig av avancerade sätt att få ut perioder och facts eftersom getAllPeriods() inte existerade i NPM paketet. istället fick jag loopa igenom 
