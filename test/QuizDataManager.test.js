@@ -1,5 +1,9 @@
 import QuizDataManager from '../src/js/services/QuizDataManager.js'
 
+/** 
+ * Unit tests for the QuizDataManager service.
+ * These tests verify the functionality of loading periods and selecting random facts.
+ */
 test('Constructor should create an instance of QuizDataManager', () => {
     const testInstance = new QuizDataManager()
     const isCorrectType = testInstance instanceof QuizDataManager
