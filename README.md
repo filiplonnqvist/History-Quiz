@@ -4,7 +4,7 @@ A simple web-based quiz application that tests your knowledge of historical time
 
 ![Application screenshot](https://github.com/filiplonnqvist/History-Quiz/blob/main/images/screenshot.png)
 
-**[Try it live](https://history-quiz.netlify.app)**
+**[Try it live](https://history-period-quiz.netlify.app)**
 
 ---
 
