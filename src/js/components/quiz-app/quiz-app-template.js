@@ -1,18 +1,23 @@
 const quizApp = document.createElement('template')
 quizApp.innerHTML = `
   <style>
-    :host { display:block; }
+    :host { 
+      display: block;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #f5f1e8;
+      min-height: 100vh;
+    }
 
-    [hidden] { display:none !important; }
+    [hidden] { display: none !important; }
 
     .view {
-      max-width: 700px;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 20px;
     }
 
     #view-start {
-      min-height: 100dvh;
+      min-height: 100vh;
       display: grid;
       place-items: center;
       padding: 24px;
@@ -20,12 +25,12 @@ quizApp.innerHTML = `
 
     #view-question {
       display: grid;
-      gap: 16px;
-      padding-block: 24px;
+      gap: 24px;
+      padding-block: 40px;
     }
 
     #view-score {
-      min-height: 100dvh;
+      min-height: 100vh;
       display: grid;
       place-items: center;
       padding: 24px;
@@ -34,10 +39,12 @@ quizApp.innerHTML = `
     #error {
       color: #8a1136;
       background: #ffe8ee;
-      border: 1px solid #ffc4d2;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-top: 16px;
+      border: 2px solid #ffc4d2;
+      padding: 16px 20px;
+      border-radius: 2px;
+      margin-top: 20px;
+      font-family: 'Georgia', serif;
+      text-align: center;
     }
   </style>
 

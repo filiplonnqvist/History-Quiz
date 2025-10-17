@@ -3,20 +3,39 @@ quizOptions.innerHTML = `
   <style>
     #options {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 8px;
-      margin: 12px 0;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
     }
+
     button {
-      padding: 10px 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: #fff;
+      padding: 16px 12px;
+      border: 2px solid #d4c4a8;
+      border-radius: 2px;
+      background: #ffffff;
       cursor: pointer;
-      font: inherit;
+      font-family: 'Georgia', serif;
+      font-size: 15px;
+      color: #2c2416;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
-    button:hover { background: #f5f5f5; }
-    button:disabled { opacity: .6; cursor: not-allowed; }
+
+    button:hover:not(:disabled) { 
+      background: #f5f1e8;
+      border-color: #8b7355;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    button:disabled { 
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
   </style>
 
   <div id="options" role="group" aria-label="Choose period"></div>
