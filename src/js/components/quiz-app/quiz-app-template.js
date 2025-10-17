@@ -26,7 +26,7 @@ quizApp.innerHTML = `
     #view-question {
       display: grid;
       gap: 24px;
-      padding-block: 40px;
+      padding-block: 20px;
     }
 
     #view-score {
