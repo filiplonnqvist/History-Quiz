@@ -2,7 +2,7 @@
 
 A simple web-based quiz application that tests your knowledge of historical time periods. Match historical facts with their correct era while learning something new!
 
-![Application screenshot](../History-Quiz/images/screenshot.png)
+![Application screenshot](https://github.com/filiplonnqvist/History-Quiz/blob/main/images/screenshot.png)
 
 **[Try it live](your-netlify-url-here)**
 
