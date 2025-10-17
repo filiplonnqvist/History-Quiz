@@ -29,7 +29,6 @@ export default class QuizDataManager {
             }
         }
         if (periods.size === 0) throw new Error('No periods available.')
-        console.log(periods)
 
         return Array.from(periods)
     }
