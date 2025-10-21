@@ -12,9 +12,12 @@ test('Constructor should create an instance of QuizDataManager', () => {
 })
 
 describe('loadAllPeriods()', () => {
+    let dataManager
+    beforeEach(() => {
+        dataManager = new QuizDataManager()
+    })
 
     test('should have periods and facts as properties', async () => {
-        const dataManager = new QuizDataManager()
         const result = await dataManager.loadAllPeriods(5)
 
         expect(result).toHaveProperty('periods')
@@ -22,7 +25,6 @@ describe('loadAllPeriods()', () => {
     })
 
     test('should return arrays of periods and facts', async () => {
-        const dataManager = new QuizDataManager()
         const result = await dataManager.loadAllPeriods()
 
         expect(Array.isArray(result.periods)).toBe(true)
@@ -30,14 +32,12 @@ describe('loadAllPeriods()', () => {
     })
 
     test('should return the correct amount of facts', async () => {
-        const dataManager = new QuizDataManager()
         const result = await dataManager.loadAllPeriods(5)
 
         expect(result.facts.length === 5).toBe(true)
     })
 
     test('should return facts with periods', async () => {
-        const dataManager = new QuizDataManager()
         const result = await dataManager.loadAllPeriods(10)
 
         for (const fact of result.facts) {
@@ -46,7 +46,6 @@ describe('loadAllPeriods()', () => {
     })
 
     test('should return unique periods', async () => {
-        const dataManager = new QuizDataManager()
         const result = await dataManager.loadAllPeriods(10)
         const periods = new Set()
 
